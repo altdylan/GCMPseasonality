@@ -14,12 +14,10 @@ mkdir Output
 #get data
 
 wget \
--nv \
 -O "RawInput/all.biom" \
 "https://www.dropbox.com/s/mwyfj2lu5bv1mrv/all.biom?dl=0"
 wget \
--nv \
--O "GCMP_EMP_map_r28_lizardisland_genus.txt" \
+-O "Input/GCMP_EMP_map_r28_lizardisland_genus.txt" \
 "https://www.dropbox.com/s/hmn2s439vxd01e4/GCMP_EMP_map_r28_lizardisland_genus.txt?dl=0"
 
 #this will convert the .biom file to a feature table usable in qiime2
@@ -38,11 +36,9 @@ qiime feature-table filter-samples \
 --i-table Input/GCMP_feature_table.qza \
 --m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus.txt \
 --o-filtered-table Input/GCMP_LI_feature_table.qza \
---quiet
 
 qiime feature-table summarize \
 --i-table Input/GCMP_LI_feature_table.qza \
 --m-sample-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus.txt \
 --output-dir Output/LI_feature_table.qzv \
---quiet
 

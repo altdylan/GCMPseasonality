@@ -43,3 +43,25 @@ qiime feature-table summarize \
 --m-sample-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus.txt \
 --output-dir Output/LI_feature_table.qzv \
 
+#this will split the Lizard Island feature table into summer and winter tables
+
+#dl metadata containing only winter samples
+
+wget \
+-O "Input/GCMP_EMP_map_r28_lizardisland_genus_WINTER.tsv" \
+"https://www.dropbox.com/s/ya0cgglx3leedxv/GCMP_EMP_map_r28_lizardisland_genus_WINTER.tsv?dl=0"
+
+#create winter feature table
+
+qiime feature-table filter-samples \
+--i-table Input/GCMP_LI_feature_table.qza \
+--m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus_WINTER.tsv \
+--o-filtered-table Input/GCMP_LI_WINTER_feature_table.qza
+
+#create summer feature table
+
+qiime feature-table filter-samples \
+--i-table Input/GCMP_LI_feature_table.qza \
+--m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus_WINTER.tsv \
+--p-exclude-ids \
+--o-filtered-table Input/GCMP_LI_SUMMER_feature_table.qza

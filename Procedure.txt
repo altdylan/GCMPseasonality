@@ -15,7 +15,7 @@ mkdir Output
 
 wget \
 -nv \
--O "RawInput/all.biom \
+-O "RawInput/all.biom" \
 "https://www.dropbox.com/s/mwyfj2lu5bv1mrv/all.biom?dl=0"
 wget \
 -nv \

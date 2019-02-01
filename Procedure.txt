@@ -1,0 +1,33 @@
+#install wget
+sudo apt install wget
+
+#make folders
+cd ~
+mkdir Seasonality
+cd Seasonality
+mkdir RawInput
+mkdir Input
+mkdir Output
+
+#get data
+wget \
+-nv \
+-O "RawInput/all.biom \
+"https://canvas.uw.edu/files/53216952/download?download_frd=1"
+
+
+#excludes data from feature table based on samples in metadata
+#creates new feature table and visualization
+#
+qiime feature-table filter-samples \
+--i-table Input/GCMP_feature_table.qza \
+--m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus.txt \
+--o-filtered-table Input/GCMP_LI_feature_table.qza \
+--quiet
+
+qiime feature-table summarize \
+--i-table Input/GCMP_LI_feature_table.qza \
+--m-sample-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus.txt \
+--output-dir Output/LI_feature_table.qzv \
+--quiet
+

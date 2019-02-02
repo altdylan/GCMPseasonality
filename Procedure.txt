@@ -65,3 +65,17 @@ qiime feature-table filter-samples \
 --m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus_WINTER.tsv \
 --p-exclude-ids \
 --o-filtered-table Input/GCMP_LI_SUMMER_feature_table.qza
+#create rooted phylgenetic artifact
+#
+#get .tre file
+#
+wget \
+-O "RawInput/gg_constrained_deblur_fastttree.tre" \
+"https://www.dropbox.com/s/4s8rxwzlcqh0dfx/gg_constrained_deblur_fastttree.tre?dl=0" \
+
+#import tre
+qiime tools import \
+--input-path RawInput/gg_constrained_deblur_fastttree.tre \
+--output-path Output/GCMP-tree.qza \
+--type 'Phylogeny[Rooted]'
+

@@ -66,21 +66,11 @@ qiime feature-table filter-samples \
 --p-exclude-ids \
 --o-filtered-table Input/GCMP_LI_SUMMER_feature_table.qza
 
-#beta diversity vis
+#lots of non-phylogenetic diversity measures
 
-qiime diversity beta-rarefaction \
+qiime diversity core-metrics \
 --i-table Input/GCMP_LI_SUMMER_feature_table.qza \
---p-metric braycurtis \
---p-clustering-method nj \
---m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus.txt \
 --p-sampling-depth 1000 \
---o-visualization Output/SUMMER_b_div.qzv
-
-qiime diversity beta-rarefaction \
---i-table Input/GCMP_LI_WINTER_feature_table.qza \
---p-metric braycurtis \
---p-clustering-method nj \
 --m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus.txt \
---p-sampling-depth 1000 \
---o-visualization Output/WINTER_b_div.qzv
-
+--p-n-jobs 1 \
+--output-dir Output/div

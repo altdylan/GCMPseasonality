@@ -76,6 +76,6 @@ wget \
 #import tre
 qiime tools import \
 --input-path RawInput/gg_constrained_deblur_fastttree.tre \
---output-path Output/GCMP-tree.qza \
+--output-path Input/GCMP-tree.qza \
 --type 'Phylogeny[Rooted]'
 

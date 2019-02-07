@@ -73,4 +73,11 @@ qiime diversity core-metrics \
 --p-sampling-depth 1000 \
 --m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus.txt \
 --p-n-jobs 1 \
---output-dir Output/div
+--output-dir Output/all_SUMMER_div
+
+qiime diversity core-metrics \
+--i-table Input/GCMP_LI_SUMMER_feature_table.qza \
+--p-sampling-depth 1000 \
+--m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus.txt \
+--p-n-jobs 1 --output-dir Output/all_WINTER_div
+

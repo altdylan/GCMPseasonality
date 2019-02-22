@@ -1,3 +1,11 @@
+#to do:
+#upload edited metadata table to dropbox
+#make sure that all commands below reference edited metadata file w/(compartment, species)_season and season column
+
+
+
+
+
 #install wget
 
 sudo apt install wget
@@ -43,41 +51,55 @@ qiime feature-table summarize \
 --m-sample-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus.txt \
 --output-dir Output/LI_feature_table.qzv \
 
+
+#create qiime alpha diversity metric as well as alpha diversity comparison visualization
+
+qiime diversity alpha \
+--i-table Input/GCMP_LI_feature_table.qza \
+--p-metric chao1 \
+--o-alpha-diversity Output/adiv/both_a_div.qza
+
+qiime diversity alpha-group-significance \
+--i-alpha-diversity Output/adiv/both_a_div.qza \
+--m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus_season.tsv \
+--o-visualization Output/adiv/both_a_div.qzv
+
 #this will split the Lizard Island feature table into summer and winter tables
 
 #dl metadata containing only winter samples
 
-wget \
--O "Input/GCMP_EMP_map_r28_lizardisland_genus_WINTER.tsv" \
-"https://www.dropbox.com/s/ya0cgglx3leedxv/GCMP_EMP_map_r28_lizardisland_genus_WINTER.tsv?dl=0"
+#wget \
+#-O "Input/GCMP_EMP_map_r28_lizardisland_genus_WINTER.tsv" \
+#"https://www.dropbox.com/s/ya0cgglx3leedxv/GCMP_EMP_map_r28_lizardisland_genus_WINTER.tsv?dl=0"
 
 #create winter feature table
 
-qiime feature-table filter-samples \
---i-table Input/GCMP_LI_feature_table.qza \
---m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus_WINTER.tsv \
---o-filtered-table Input/GCMP_LI_WINTER_feature_table.qza
+#qiime feature-table filter-samples \
+#--i-table Input/GCMP_LI_feature_table.qza \
+#--m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus_WINTER.tsv \
+#--o-filtered-table Input/GCMP_LI_WINTER_feature_table.qza
 
 #create summer feature table
 
-qiime feature-table filter-samples \
+#qiime feature-table filter-samples \
+#--i-table Input/GCMP_LI_feature_table.qza \
+#--m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus_WINTER.tsv \
+#--p-exclude-ids \
+#--o-filtered-table Input/GCMP_LI_SUMMER_feature_table.qza
+
+#lots of non-phylogenetic diversity measures - I only used the jacard distance but handy to have others, i guess?
+
+qiime diversity core-metrics \
 --i-table Input/GCMP_LI_feature_table.qza \
---m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus_WINTER.tsv \
---p-exclude-ids \
---o-filtered-table Input/GCMP_LI_SUMMER_feature_table.qza
-
-#lots of non-phylogenetic diversity measures
-
-qiime diversity core-metrics \
---i-table Input/GCMP_LI_SUMMER_feature_table.qza \
 --p-sampling-depth 1000 \
---m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus.txt \
+--m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus_season.tsv \
 --p-n-jobs 1 \
---output-dir Output/all_SUMMER_div
+--output-dir Output/all_div
 
-qiime diversity core-metrics \
---i-table Input/GCMP_LI_SUMMER_feature_table.qza \
---p-sampling-depth 1000 \
---m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus.txt \
---p-n-jobs 1 --output-dir Output/all_WINTER_div
+#once we have this, we can compare the samples with the beta-group-significance command
 
+qiime diversity beta-group-significance \
+--i-distance-matrix Output/all_div/bray_curtis_distance_matrix.qza \
+--m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus_season.tsv \
+--m-metadata-column host_scientific_name_season \
+--o-visualization Output/bdiv/both_b_div.qzv

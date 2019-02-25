@@ -1,9 +1,8 @@
 #to do:
 #upload edited metadata table to dropbox
 #make sure that all commands below reference edited metadata file w/(compartment, species)_season and season column
-
-
-
+#add p values to alpha diversity distance graphs
+#separate tissue compartments and run beta diversity commands on them - specifically mucus
 
 
 #install wget

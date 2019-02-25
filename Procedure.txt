@@ -102,3 +102,11 @@ qiime diversity beta-group-significance \
 --m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus_season.tsv \
 --m-metadata-column host_scientific_name_season \
 --o-visualization Output/bdiv/both_b_div.qzv
+
+#filter to just mucus samples
+
+qiime feature-table filter-samples \
+--i-table Input/GCMP_feature_table.qza \
+--m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus_season.tsv \
+--p-where "tissue_compartment='M'" \
+--o-filtered-table Input/m_ft.qza

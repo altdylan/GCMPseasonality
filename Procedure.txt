@@ -112,3 +112,25 @@ qiime feature-table filter-samples \
 --m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus_season.tsv \
 --p-where "tissue_compartment='M'" \
 --o-filtered-table Input/m_ft.qza
+
+#these generate chao1 alpha diversity numbers and box plots
+
+qiime diversity alpha \
+--i-table Input/GCMP_LI_SUMMER_feature_table.qza \
+--p-metric chao1 \
+--o-alpha-diversity Output/adiv/summer_a_div.qza
+
+qiime diversity alpha \
+--i-table Input/GCMP_LI_WINTER_feature_table.qza \
+--p-metric chao1 \
+--o-alpha-diversity Output/adiv/winter_a_div.qza
+
+qiime diversity alpha-group-significance \
+--i-alpha-diversity Output/adiv/summer_a_div.qza \
+--m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus.txt \
+--o-visualization Output/adiv/summer_a_div.qzv
+
+qiime diversity alpha-group-significance \
+--i-alpha-diversity Output/adiv/winter_a_div.qza \
+--m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus.txt \
+--o-visualization Output/adiv/winter_a_div.qzv

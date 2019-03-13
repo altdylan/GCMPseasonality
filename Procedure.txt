@@ -154,3 +154,16 @@ qiime diversity alpha-group-significance \
 --o-visualization Output/adiv/winter_a_div.qzv
 
 #gneiss
+
+qiime gneiss assign-ids \
+--i-input-tableInput/GCMP_rare_filtered.qza \
+--i-input-tree Input/tree.qza \
+--o-output-table Output/gneissid.qza \
+--o-output-tree Output/hierarchy
+
+
+qiime taxa barplot \
+--i-table Output/gneissid.qza \
+--i-taxonomy Input/gcmp_taxonomy.qza \
+--m-metadata-file Input/GCMP_metadata.tsv \
+--o-visualization Output/taxabarplot.qzv

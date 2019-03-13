@@ -1,5 +1,5 @@
 #to do:
-#upload edited metadata table to dropbox
+
 #make sure that all commands below reference edited metadata file w/(compartment, species)_season and season column
 #add p values to alpha diversity distance graphs
 #seaborn.swarm plot for data
@@ -153,6 +153,23 @@ qiime diversity alpha-group-significance \
 --m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus.txt \
 --o-visualization Output/adiv/winter_a_div.qzv
 
+#feature filtered, rarefied to metadata filtered:
+qiime feature-table filter-samples \
+--i-table Input/GCMP_rare_filtered.qza \
+--m-metadata-file Input/GCMP_metadata.tsv \
+--o-filtered-table Input/GCMP_filtered.qza
+
+#ancom
+qiime composition add-pseudocount \
+--i-table Input/GCMP_filtered.qza \
+--o-composition-table Output/LIdata/composition_table.qza
+
+qiime composition ancom \
+--i-table Output/LIdata/composition_table.qza  \
+--m-metadata-file Input/GCMP_metadata.tsv \
+--m-metadata-column season \
+--o-visualization Output/LIdata/ancom.qzv
+
 #gneiss
 
 qiime gneiss assign-ids \
@@ -167,3 +184,5 @@ qiime taxa barplot \
 --i-taxonomy Input/gcmp_taxonomy.qza \
 --m-metadata-file Input/GCMP_metadata.tsv \
 --o-visualization Output/taxabarplot.qzv
+
+

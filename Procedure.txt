@@ -156,7 +156,7 @@ qiime diversity alpha-group-significance \
 #gneiss
 
 qiime gneiss assign-ids \
---i-input-tableInput/GCMP_rare_filtered.qza \
+--i-input-table Input/GCMP_rare_filtered.qza \
 --i-input-tree Input/tree.qza \
 --o-output-table Output/gneissid.qza \
 --o-output-tree Output/hierarchy

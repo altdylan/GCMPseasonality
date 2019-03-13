@@ -27,8 +27,26 @@ wget \
 "https://www.dropbox.com/s/mwyfj2lu5bv1mrv/all.biom?dl=0"
 
 wget \
--O "Input/GCMP_EMP_map_r28_lizardisland_genus.txt" \
-"https://www.dropbox.com/s/hmn2s439vxd01e4/GCMP_EMP_map_r28_lizardisland_genus.txt?dl=0"
+-O "Input/GCMP_metadata.txt" \
+"https://www.dropbox.com/s/9ihjbt4spn6ncpl/GCMP_EMP_map_r28_lizardisland_genus_season.tsv?dl=0"
+
+wget \
+-O "RawInput/all.seqs.fa" \
+"https://www.dropbox.com/s/the7lnuhks1kj1z/all.seqs.fa?dl=0"
+
+#add taxonomy info
+qiime tools import \
+--input-path RawInput/all.seqs.fa \
+--output-path Input/sequences.qza \
+--type 'FeatureData[Sequence]'
+
+
+# this command takes a LONG time to run. I used 4 cores w/ 16 gigs of RAM and I had to leave it running overnight.
+
+qiime fragment-insertion sepp \
+--i-representative sequences Input/sequences.qza \
+--output-dir Output/phylo
+
 
 #this will convert the .biom file to a feature table usable in qiime2
 #we can then filter the feature table by the metadata file we choose to use
@@ -44,7 +62,7 @@ qiime tools import \
 
 qiime feature-table filter-samples \
 --i-table Input/GCMP_feature_table.qza \
---m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus.txt \
+--m-metadata-file Input/GCMP_metadata.txt \
 --o-filtered-table Input/GCMP_LI_feature_table.qza \
 
 qiime feature-table summarize \
@@ -135,16 +153,4 @@ qiime diversity alpha-group-significance \
 --m-metadata-file Input/GCMP_EMP_map_r28_lizardisland_genus.txt \
 --o-visualization Output/adiv/winter_a_div.qzv
 
-#add taxonomy info
-qiime tools import \
---input-path RawInput/all.seqs.fa \
---output-path Input/sequences.qza \
---type 'FeatureData[Sequence]'
-
-
-# heads up - this command takes a LONG time to run. I used 4 cores w/ 16 gigs of RAM and I had to leave it running overnight.
-
-qiime fragment-insertion sepp \
---i-representative sequences Input/sequences.qza \
---output-dir Output/phylo
-
+#gneiss
